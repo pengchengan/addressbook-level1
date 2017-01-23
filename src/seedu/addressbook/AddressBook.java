@@ -1151,8 +1151,8 @@ public class AddressBook {
      * @return  string without the sign
      */
 
-    private static String removePrefix(String fullstirng, String prefix) {
-        return fullstirng.replace(prefix, "");
+    private static String removePrefix(String fullstirngs, String prefix) {
+        return fullstirngs.replace(prefix, "");
     }
     /**
      * Splits a source string into the list of substrings that were separated by whitespace.
