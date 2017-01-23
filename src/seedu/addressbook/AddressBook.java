@@ -1153,7 +1153,6 @@ public class AddressBook {
     private static String removePrefix(String fullString, String prefix){
         return fullString.replace(prefix, "");
     }
-
     /**
      * Splits a source string into the list of substrings that were separated by whitespace.
      *
