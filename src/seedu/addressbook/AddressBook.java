@@ -1150,10 +1150,10 @@ public class AddressBook {
      * @param sign  Parameter sign to be removed
      * @return  string without the sign
      */
+
     private static String removePrefix(String fullstirng, String prefix) {
         return fullstirng.replace(prefix, "");
     }
-
     /**
      * Splits a source string into the list of substrings that were separated by whitespace.
      *
