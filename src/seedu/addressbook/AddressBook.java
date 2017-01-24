@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Scanner;
@@ -115,6 +116,8 @@ public class AddressBook {
     private static final String COMMAND_LIST_DESC = "Displays all persons as a list with index numbers.";
     private static final String COMMAND_LIST_EXAMPLE = COMMAND_LIST_WORD;
 
+    private static final String COMMAND_SORT_WORD = "sort";
+    
     private static final String COMMAND_DELETE_WORD = "delete";
     private static final String COMMAND_DELETE_DESC = "Deletes a person identified by the index number used in "
                                                     + "the last find/list call.";
@@ -376,6 +379,8 @@ public class AddressBook {
             return executeFindPersons(commandArgs);
         case COMMAND_LIST_WORD:
             return executeListAllPersonsInAddressBook();
+        case COMMAND_SORT_WORD:
+            return executeSortAllPersonsInAddressBook();
         case COMMAND_DELETE_WORD:
             return executeDeletePerson(commandArgs);
         case COMMAND_CLEAR_WORD:
@@ -389,7 +394,9 @@ public class AddressBook {
         }
     }
 
-    /**
+    
+
+	/**
      * Splits raw user input into command word and command arguments string
      *
      * @return  size 2 array; first element is the command type and second element is the arguments string
@@ -579,7 +586,24 @@ public class AddressBook {
         showToUser(toBeDisplayed);
         return getMessageForPersonsDisplayedSummary(toBeDisplayed);
     }
+    /**
+     * T2A4
+     * Displays all persons in the address book to the user; in alphabetical order.
+     * comparator http://stackoverflow.com/questions/4699807/sort-arraylist-of-array-in-java
+     * @return feedback display message for the operation result
+     */
+    private static String executeSortAllPersonsInAddressBook() {
+    	ArrayList<String[]> toBeDisplayed = getAllPersonsInAddressBook();
+    	
+    	Collections.sort(toBeDisplayed,new Comparator<String[]>() {
+            public int compare(String[] strings, String[] otherStrings) {
+                return strings[0].toLowerCase().compareTo(otherStrings[0].toLowerCase());
+            }
+        });
+        showToUser(toBeDisplayed);
+        return getMessageForPersonsDisplayedSummary(toBeDisplayed);
 
+	}
     /**
      * Requests to terminate the program.
      */
