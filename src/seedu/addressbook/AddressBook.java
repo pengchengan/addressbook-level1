@@ -223,16 +223,36 @@ public class AddressBook {
         if(args.length == 0) {
             setupDefaultFileForStorage();
         }
-        //T2A3 End
+        //T2A3 Exercise 1 End
         
         loadDataFromStorage();
-        while (true) {
-            String userCommand = getUserInput();
+        //T2A3 Exercise 2 
+        T2A3Exercise_2();
+    }
+    //T2A3 Exercise 2
+	private static void T2A3Exercise_2() {
+		while (true) {
+            
+			/*
+			 * String userCommand = getUserInput();
             echoUserCommand(userCommand);
             String feedback = executeCommand(userCommand);
             showResultToUser(feedback);
+            */
+			//T2A3 Exercise 2
+            //String userCommand = getUserInput();
+            System.out.print(LINE_PREFIX + "Enter command: ");
+            String inputLine = SCANNER.nextLine();
+            // silently consume all blank and comment lines
+            while (inputLine.trim().isEmpty() || inputLine.trim().charAt(0) == INPUT_COMMENT_MARKER) {
+                inputLine = SCANNER.nextLine();
+            }
+            String userCommand=inputLine;
+            echoUserCommand(userCommand);
+            //String feedback = ;
+            showResultToUser(executeCommand(userCommand));
         }
-    }
+	}
 
     /*
      * NOTE : =============================================================
