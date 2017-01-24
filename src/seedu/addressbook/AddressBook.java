@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
+import java.lang.Object;
 
 /*
  * NOTE : =============================================================
@@ -487,7 +488,18 @@ public class AddressBook {
         final ArrayList<String[]> matchedPersons = new ArrayList<>();
         for (String[] person : getAllPersonsInAddressBook()) {
             final Set<String> wordsInName = new HashSet<>(splitByWhitespace(getNameFromPerson(person)));
-            if (!Collections.disjoint(wordsInName, keywords)) {
+
+            Set<String> wordsInNameLowerCase=new HashSet<String>();
+            for (String s : wordsInName) {
+                String temp=s.toLowerCase();
+                wordsInNameLowerCase.add(temp);
+            }
+            Collection<String> keywordsLowerCase=new HashSet<String>();
+            for (String s : keywords) {
+            	String temp=s.toLowerCase();
+                keywordsLowerCase.add(temp);
+            }
+            if (!Collections.disjoint(wordsInNameLowerCase, keywordsLowerCase)) {
                 matchedPersons.add(person);
             }
         }
