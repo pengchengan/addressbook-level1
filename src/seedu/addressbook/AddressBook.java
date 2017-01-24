@@ -208,51 +208,16 @@ public class AddressBook {
 
     public static void main(String[] args) {
         showWelcomeMessage();
-        
-        //T2A3 Exercise 1: Reduce SLAP of method
-        //processProgramArgs(args);
-        if (args.length >= 2) {
-            showToUser(MESSAGE_INVALID_PROGRAM_ARGS);
-            exitProgram();
-        }
-
-        if (args.length == 1) {
-            setupGivenFileForStorage(args[0]);
-        }
-
-        if(args.length == 0) {
-            setupDefaultFileForStorage();
-        }
-        //T2A3 Exercise 1 End
+        processProgramArgs(args);
         
         loadDataFromStorage();
-        //T2A3 Exercise 2 
-        T2A3Exercise_2();
-    }
-    //T2A3 Exercise 2
-	private static void T2A3Exercise_2() {
-		while (true) {
-            
-			/*
-			 * String userCommand = getUserInput();
+        while (true) {
+			String userCommand = getUserInput();
             echoUserCommand(userCommand);
             String feedback = executeCommand(userCommand);
             showResultToUser(feedback);
-            */
-			//T2A3 Exercise 2
-            //String userCommand = getUserInput();
-            System.out.print(LINE_PREFIX + "Enter command: ");
-            String inputLine = SCANNER.nextLine();
-            // silently consume all blank and comment lines
-            while (inputLine.trim().isEmpty() || inputLine.trim().charAt(0) == INPUT_COMMENT_MARKER) {
-                inputLine = SCANNER.nextLine();
-            }
-            String userCommand=inputLine;
-            echoUserCommand(userCommand);
-            //String feedback = ;
-            showResultToUser(executeCommand(userCommand));
         }
-	}
+    }
 
     /*
      * NOTE : =============================================================
