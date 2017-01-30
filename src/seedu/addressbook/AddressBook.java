@@ -1144,6 +1144,7 @@ public class AddressBook {
      */
 
     /**
+     * Remove prefix from fullstring
      * @param fullstring Parameter as a string
      * @param prefix Parameter sign to be removed
      * @return string without the sign
