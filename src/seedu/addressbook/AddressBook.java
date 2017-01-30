@@ -36,6 +36,14 @@ import java.lang.Object;
  * This class is used to maintain a list of person data which are saved
  * in a text file.
  **/
+/**
+ * @author user
+ *
+ */
+/**
+ * @author user
+ *
+ */
 public class AddressBook {
 
     /**
@@ -118,6 +126,8 @@ public class AddressBook {
     private static final String COMMAND_LIST_EXAMPLE = COMMAND_LIST_WORD;
 
     private static final String COMMAND_SORT_WORD = "sort";
+    private static final String COMMAND_SORT_DESC = "Displays all persons as a list in sorted order.";
+    private static final String COMMAND_SORT_EXAMPLE = COMMAND_SORT_WORD;
     
     private static final String COMMAND_DELETE_WORD = "delete";
     private static final String COMMAND_DELETE_DESC = "Deletes a person identified by the index number used in "
@@ -212,8 +222,7 @@ public class AddressBook {
 
     public static void main(String[] args) {
         showWelcomeMessage();
-        processProgramArgs(args);
-        
+        processProgramArgs(args);        
         loadDataFromStorage();
         while (true) {
 			String userCommand = getUserInput();
@@ -394,9 +403,7 @@ public class AddressBook {
             return getMessageForInvalidCommandInput(commandType, getUsageInfoForAllCommands());
         }
     }
-
     
-
 	/**
      * Splits raw user input into command word and command arguments string
      *
@@ -494,25 +501,31 @@ public class AddressBook {
     private static ArrayList<String[]> getPersonsWithNameContainingAnyKeyword(Collection<String> keywords) {
         final ArrayList<String[]> matchedPersons = new ArrayList<>();
         for (String[] person : getAllPersonsInAddressBook()) {
-            final Set<String> wordsInName = new HashSet<>(splitByWhitespace(getNameFromPerson(person)));
+            final Collection<String> wordsInName = new HashSet<>(splitByWhitespace(getNameFromPerson(person)));
 
-            Set<String> wordsInNameLowerCase=new HashSet<String>();
-            for (String s : wordsInName) {
-                String temp=s.toLowerCase();
-                wordsInNameLowerCase.add(temp);
-            }
-            Collection<String> keywordsLowerCase=new HashSet<String>();
-            for (String s : keywords) {
-            	String temp=s.toLowerCase();
-                keywordsLowerCase.add(temp);
-            }
+            Collection<String> wordsInNameLowerCase = changeStringsToLower(wordsInName);
+            Collection<String> keywordsLowerCase = changeStringsToLower(keywords);
             if (!Collections.disjoint(wordsInNameLowerCase, keywordsLowerCase)) {
                 matchedPersons.add(person);
             }
         }
         return matchedPersons;
     }
-
+    
+    /** Change strings into lower case
+     * 
+     * @param setOfStrings Set of strings need to change into lower case
+     * @return Set of Strings in lower case
+     */
+    private static Collection<String> changeStringsToLower(Collection<String> setOfStrings){
+    	Collection<String> lowerStrings = new HashSet<String>();
+    	for (String s : setOfStrings) {
+            String temp=s.toLowerCase();
+            lowerStrings.add(temp);
+        }
+    	return lowerStrings;
+    }
+    
     /**
      * Deletes person identified using last displayed index.
      *
@@ -602,6 +615,7 @@ public class AddressBook {
      * T2A4
      * Displays all persons in the address book to the user; in alphabetical order.
      * comparator http://stackoverflow.com/questions/4699807/sort-arraylist-of-array-in-java
+     * 
      * @return feedback display message for the operation result
      */
     private static String executeSortAllPersonsInAddressBook() {
@@ -1121,7 +1135,8 @@ public class AddressBook {
     private static String getUsageInfoForAllCommands() {
         return getUsageInfoForAddCommand() + LS
                 + getUsageInfoForFindCommand() + LS
-                + getUsageInfoForViewCommand() + LS
+                + getUsageInfoForViewCommand() + LS                
+                + getUsageInfoForSortCommand() + LS
                 + getUsageInfoForDeleteCommand() + LS
                 + getUsageInfoForClearCommand() + LS
                 + getUsageInfoForExitCommand() + LS
@@ -1159,6 +1174,11 @@ public class AddressBook {
     private static String getUsageInfoForViewCommand() {
         return String.format(MESSAGE_COMMAND_HELP, COMMAND_LIST_WORD, COMMAND_LIST_DESC) + LS
                 + String.format(MESSAGE_COMMAND_HELP_EXAMPLE, COMMAND_LIST_EXAMPLE) + LS;
+    }
+    /** Returns the string for showing 'sort' command usage instruction */
+    private static String getUsageInfoForSortCommand() {
+        return String.format(MESSAGE_COMMAND_HELP, COMMAND_SORT_WORD, COMMAND_SORT_DESC) + LS
+                + String.format(MESSAGE_COMMAND_HELP_EXAMPLE, COMMAND_SORT_EXAMPLE) + LS;
     }
 
     /** Returns string for showing 'help' command usage instruction */
